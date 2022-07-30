@@ -1,34 +1,54 @@
+//import required packages
 const inquirer = require('inquirer');
-const mysql = require('mysql2');
-const consoleTable = require('console.table');
+const connection = require('./db/connection');
+const EmployeeDB = require('./db/index');
+const cTable = require('console.table');
 
-const db = mysql.createConnection(
+
+
+
+//main menu prompts
+const mainMenu = [
   {
-    host: 'localhost',
-    // MySQL username,
-    user: 'root',
-    // MySQL password
-    password: 'seb',
-    database: 'employee_tracker_db'
-  },
-  console.log(`Connected to the employee database.`)
-);
+    type: 'list',
+    name: 'choice',
+    message: 'What would you like to do?',
+    choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Roles', 'View All Departments', 'Add Department', 'Quit'],
+  }
+]
 
-function viewDepartment() {
-  db.query('SELECT * FROM department', function (err, results) {
-    console.table(results);
-  });
+const startProgram = () => {
+  inquirer.prompt(mainMenu)
+  .then(decision => {
+    if(decision.choice === 'View All Employees'){
+      console.log('view employees function');
+    } else if (decision.choice === 'Add Employee'){
+      console.log('add employee function');
+    } else if (decision.choice === 'Update Employee Role'){
+      console.log('update employee function');
+    } else if (decision.choice === 'View All Roles'){
+      console.log('view all roles function');
+    } else if (decision.choice === 'Add Roles'){
+      console.log('add roles function');
+    } else if (decision.choice === 'View All Departments'){
+      console.log('view all departments function');
+    } else if (decision.choice === 'Add Department'){
+      console.log('add department function');
+    } else {
+      console.log('Thanks for stopping by!');
+    }
+  })
 }
 
+const viewEmployees = () =>
 
-viewDepartment();
+// startProgram();
 
-// First Prompt: What would you like to do?
-// - View all Employees
-// - Add Employee
-// - Update Employee Role
-// - View All Roles
-// - Add Role
-// - View All Departments
-// - Add Department
-// - Quit
+// function viewDepartment() {
+//   db.query('SELECT * FROM department', function (err, results) {
+//     console.table(results);
+//   });
+// }
+
+
+// viewDepartment();
