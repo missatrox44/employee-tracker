@@ -1,25 +1,19 @@
 const connection = require('./connection');
 
 class EmployeeDB {
-  construction (connection){
+  constructor (connection){
     this.connection = connection;
   }
   viewAllDepartments() {
-    return this.connection.promise().query(
-      "SELECT * FROM DEPARTMENT"
-    )
+    return this.connection.promise().query("SELECT * FROM DEPARTMENT")
   }
   
   viewAllRoles() {
-    return this.connection.promise().query(
-      "SELECT * FROM ROLES"
-    )
+    return this.connection.promise().query("SELECT * FROM ROLES")
   }
   
   viewAllEmployees() {
-    return this.connection.promise().query(
-      "SELECT * FROM EMPLOYEES"
-    )
+    return this.connection.promise().query("SELECT * FROM EMPLOYEES")
   }
 }
 

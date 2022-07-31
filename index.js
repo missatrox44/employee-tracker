@@ -21,17 +21,20 @@ const startProgram = () => {
   inquirer.prompt(mainMenu)
   .then(decision => {
     if(decision.choice === 'View All Employees'){
-      console.log('view employees function');
+      // console.log('view employees function');
+      viewAllEmployees();
     } else if (decision.choice === 'Add Employee'){
       console.log('add employee function');
     } else if (decision.choice === 'Update Employee Role'){
       console.log('update employee function');
     } else if (decision.choice === 'View All Roles'){
-      console.log('view all roles function');
+      // console.log('view all roles function');
+      viewAllRoles();
     } else if (decision.choice === 'Add Roles'){
       console.log('add roles function');
     } else if (decision.choice === 'View All Departments'){
-      console.log('view all departments function');
+      // console.log('view all departments function');
+      viewAllDepartments();
     } else if (decision.choice === 'Add Department'){
       console.log('add department function');
     } else {
@@ -40,15 +43,35 @@ const startProgram = () => {
   })
 }
 
-const viewEmployees = () =>
+const viewAllEmployees = () => {
+  EmployeeDB.viewAllEmployees()
+  .then(([rows]) => {
+    console.log(rows)
+  })
+}
 
-// startProgram();
+//ADD EMPLOYEE 
 
-// function viewDepartment() {
-//   db.query('SELECT * FROM department', function (err, results) {
-//     console.table(results);
-//   });
-// }
+//UPDATE EMPLOYEE ROLE
 
+//VIEW ALL ROLES
+const viewAllRoles = () => {
+  EmployeeDB.viewAllRoles()
+  .then(([rows]) => {
+    console.log(rows)
+  })
+}
 
-// viewDepartment();
+//ADD ROLES
+
+//VIEW ALL DEPARTMENTS
+const viewAllDepartments = () => {
+  EmployeeDB.viewAllDepartments()
+  .then(([rows]) => {
+    console.log(rows)
+  })
+}
+
+//ADD DEPARTMENT
+
+startProgram();
