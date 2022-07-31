@@ -46,7 +46,7 @@ const startProgram = () => {
 const viewAllEmployees = () => {
   EmployeeDB.viewAllEmployees()
   .then(([rows]) => {
-    console.log(rows)
+    console.table(rows)
   })
 }
 
@@ -58,7 +58,7 @@ const viewAllEmployees = () => {
 const viewAllRoles = () => {
   EmployeeDB.viewAllRoles()
   .then(([rows]) => {
-    console.log(rows)
+    console.table(rows)
   })
 }
 
@@ -68,7 +68,7 @@ const viewAllRoles = () => {
 const viewAllDepartments = () => {
   EmployeeDB.viewAllDepartments()
   .then(([rows]) => {
-    console.log(rows)
+    console.table(rows)
   })
 }
 
