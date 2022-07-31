@@ -36,7 +36,8 @@ const startProgram = () => {
       // console.log('view all departments function');
       viewAllDepartments();
     } else if (decision.choice === 'Add Department'){
-      console.log('add department function');
+      // console.log('add department function');
+      addDept();
     } else {
       console.log('Thanks for stopping by!');
     }
@@ -73,6 +74,12 @@ const viewAllDepartments = () => {
 }
 
 //ADD DEPARTMENT
+const addDept = () => {
+  EmployeeDB.addDept()
+  .then(([rows]) => {
+    console.table(rows)
+  })
+}
 
 
 startProgram();
