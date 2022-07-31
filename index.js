@@ -74,4 +74,5 @@ const viewAllDepartments = () => {
 
 //ADD DEPARTMENT
 
+
 startProgram();
