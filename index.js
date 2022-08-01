@@ -26,7 +26,8 @@ const startProgram = () => {
     } else if (decision.choice === 'Add Employee'){
       console.log('add employee function');
     } else if (decision.choice === 'Update Employee Role'){
-      console.log('update employee function');
+      // console.log('update employee function');
+      updateEmp();
     } else if (decision.choice === 'View All Roles'){
       // console.log('view all roles function');
       viewAllRoles();
@@ -54,7 +55,38 @@ const viewAllEmployees = () => {
 
 //ADD EMPLOYEE 
 
+
 //UPDATE EMPLOYEE ROLE
+const updateEmp = () => {
+    EmployeeDB.callEmployees()
+    .then(([rows]) => {
+      const employeeChoices = rows.map(employee => {
+        return {
+          name: `${employee.first_name} ${employee.last_name}`,
+          value: employee.id
+        }
+      })
+    inquirer.prompt([
+      {
+        type: 'list',
+        name: 'chosenEmp',
+        message: 'Which employees role do you want to update?',
+        choices: employeeChoices
+      }
+    ])
+   .then ((answer) => {
+    EmployeeDB.addDept(answer.chosenEmp)  
+    console.log(`Selected ${answer.chosenEmp} to update.`)
+  })
+  .then(() => {
+    //inquirer- WHich role would you like to assign this person
+    console.log('Which role would you like to assign this person?');
+    startProgram();
+   })
+})
+}
+
+
 
 //VIEW ALL ROLES
 const viewAllRoles = () => {
