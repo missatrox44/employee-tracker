@@ -20,12 +20,11 @@ class EmployeeDB {
     return this.connection.promise().query("SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.dept AS department, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN departments on roles.department_id = departments.id LEFT JOIN employees manager on manager.id = employees.manager_id")
   }
 
-  addDept() {
-    return this.connection.promise().query("INSERT INTO departments (dept) VALUES (?), newName.dept", (err, data) => {
-      if (err) throw err
-    })
+  addDept(input) {
+    return this.connection.promise().query("INSERT INTO departments (dept) VALUES (?)", input)
+    }
   }
-}
+
 
 module.exports = new EmployeeDB(connection);
 

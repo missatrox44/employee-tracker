@@ -48,6 +48,7 @@ const viewAllEmployees = () => {
   EmployeeDB.viewAllEmployees()
   .then(([rows]) => {
     console.table(rows)
+    startProgram();
   })
 }
 
@@ -60,6 +61,7 @@ const viewAllRoles = () => {
   EmployeeDB.viewAllRoles()
   .then(([rows]) => {
     console.table(rows)
+    startProgram();
   })
 }
 
@@ -70,32 +72,32 @@ const viewAllDepartments = () => {
   EmployeeDB.viewAllDepartments()
   .then(([rows]) => {
     console.table(rows)
+    startProgram();
   })
 }
 
-
-// const addDeptPrompt = [
-//   {
-//     type: 'input',
-//     name: 'dept',
-//     message: 'What is the name of the department?',
-//   }
-// ]
+//ADD DEPARTMENT question
+const addDeptQ = [
+  {
+    type: 'input',
+    name: 'newDept',
+    message: 'What is the name of the department?',
+  }
+]
 
 //ADD DEPARTMENT
-const addDept = (newName) => {
-  inquirer.prompt([
-    {
-    type: 'input',
-    name: 'dept',
-    message: 'What is the name of the department?',
-    }
-  ])
-  .then(EmployeeDB.addDept(newName))
-  .then(([rows]) => {
-    console.table(rows)
+const addDept = () => {
+  inquirer.prompt(addDeptQ)
+  .then ((answer) => {
+    EmployeeDB.addDept(answer.newDept)  
+    console.log(`Added ${answer.newDept} to Employee Database.`)
+  })
+  .then(() => {
+    startProgram();
   })
 }
+
+
 
 
 startProgram();
