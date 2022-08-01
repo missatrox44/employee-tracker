@@ -73,9 +73,25 @@ const viewAllDepartments = () => {
   })
 }
 
+
+// const addDeptPrompt = [
+//   {
+//     type: 'input',
+//     name: 'dept',
+//     message: 'What is the name of the department?',
+//   }
+// ]
+
 //ADD DEPARTMENT
-const addDept = () => {
-  EmployeeDB.addDept()
+const addDept = (newName) => {
+  inquirer.prompt([
+    {
+    type: 'input',
+    name: 'dept',
+    message: 'What is the name of the department?',
+    }
+  ])
+  .then(EmployeeDB.addDept(newName))
   .then(([rows]) => {
     console.table(rows)
   })

@@ -21,12 +21,9 @@ class EmployeeDB {
   }
 
   addDept() {
-    inquirer.prompt([{
-      type: 'input',
-      name: 'deptName',
-      message: 'What is the name of the department?',
-    }])
-    return this.connection.promise().query("INSERT INTO departments (dept) VALUES (?)")
+    return this.connection.promise().query("INSERT INTO departments (dept) VALUES (?), newName.dept", (err, data) => {
+      if (err) throw err
+    })
   }
 }
 
