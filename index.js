@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 const connection = require('./db/connection');
 const EmployeeDB = require('./db/index');
 const cTable = require('console.table');
+const { updateEmployeeRole } = require('./db/index');
 
 
 
@@ -27,9 +28,7 @@ const startProgram = () => {
         startProgram();
         //addEmployee function
       } else if (decision.choice === 'Update Employee Role') {
-        console.log('Function under construction');
-        // updateEmp();
-        startProgram();
+        updateEmp();
       } else if (decision.choice === 'View All Roles') {
         viewRoles();
       } else if (decision.choice === 'Add Roles') {
@@ -56,52 +55,54 @@ const viewEmployeeInfo = () => {
 //ADD EMPLOYEE 
 
 
-// //UPDATE EMPLOYEE ROLE
-// const updateEmp = () => {
-//   EmployeeDB.callEmployees()
-//     .then(([rows]) => {
-//       const employeeChoices = rows.map(employee => {
-//         return {
-//           name: `${employee.first_name} ${employee.last_name}`,
-//           value: employee.first_name
-//         }
-//       })
-//       inquirer.prompt([
-//         {
-//           type: 'list',
-//           name: 'chosenEmp',
-//           message: 'Which employees role do you want to update?',
-//           choices: employeeChoices
-//         }
-//       ])
-//         .then((answer) => {
-//           EmployeeDB.insertDept(answer.chosenEmp)
-//           // console.log(`Selected ${answer.chosenEmp} to update.`)
-//         })
-//         .then(() => {
-//           EmployeeDB.callRoles()
-//             .then(([rows]) => {
-//               const roleChoices = rows.map(role => {
-//                 return {
-//                   title: `${role.title}`,
-//                   value: role.title
-//                 }
-//               })
-//               inquirer.prompt([
-//                 {
-//                   type: 'list',
-//                   name: 'chosenRole',
-//                   message: 'Which role would you like to assign this person?',
-//                   choices: roleChoices
-//                 }
-//               ])
-//                 .then((answer) => {
-//                   console.log(`Assigned the role ${answer.chosenRole} to ${answer.chosenEmp}`)
-//                 })
-//             })startProgram();
-//         })
-//     })
-// }
+//UPDATE EMPLOYEE ROLE
+const updateEmp = () => {
+  EmployeeDB.callEmployees()
+    .then(([rows]) => {
+      const employeeChoices = rows.map(employee => {
+        return {
+          name: `${employee.first_name} ${employee.last_name}`,
+          value: employee.id
+        }
+      })
+      // console.log(employeeChoices);
+      inquirer.prompt([
+        {
+          type: 'list',
+          name: 'chosenEmp',
+          message: 'Which employees role do you want to update?',
+          choices: employeeChoices
+        }
+      ])
+        .then((answer) => {
+          let empToUpdate = answer.chosenEmp
+          // console.log(empToUpdate)
+          EmployeeDB.callRoles()
+            .then(([rows]) => {
+              const roleChoices = rows.map(role => {
+                return {
+                  name: role.title,
+                  value: role.id
+                }
+              })
+              inquirer.prompt([
+                {
+                  type: 'list',
+                  name: 'chosenRole',
+                  message: 'Which role would you like to assign this person?',
+                  choices: roleChoices
+                }
+              ])
+                .then((answer) => {
+                  // console.log(answer)
+                  console.log(`Assigned the role ${answer.chosenRole} to ${empToUpdate}`)
+                  EmployeeDB.updateEmployeeRole(answer.chosenRole, empToUpdate);
+                  startProgram();
+                })
+            })
+        })
+    })
+}
 
 
 
@@ -116,11 +117,23 @@ const viewRoles = () => {
 }
 
 //ADD ROLES question
+//make question a function
+//return addRolesQ
 const addRolesQ = [
   {
     type: 'input',
     name: 'newRole',
     message: 'What is the name of the role?',
+  },
+  {
+    type: 'input',
+    name: 'salary',
+    message: 'What is the salary of the role?',
+  },
+  {
+    type: 'input',
+    name: 'whichDept',
+    message: 'Which department does this role belong to?',
   }
 ]
 

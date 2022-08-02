@@ -30,7 +30,7 @@ class EmployeeDB {
     return this.connection.promise().query("INSERT INTO roles (title) VALUES (?)", input)
   }
 
-  //produce of employee names only
+  //produce employee names only
   callEmployees() {
     return this.connection.promise().query("SELECT employees.id, employees.first_name, employees.last_name FROM employees")
   }
@@ -40,8 +40,10 @@ class EmployeeDB {
     return this.connection.promise().query("SELECT roles.id, roles.title FROM roles")
   }
 
-  update(input) {
-    return this.connection.promise().query("UPDATE roles (title) VALUES (?)", input)
+  //query to actually update employees table
+  updateEmployeeRole(role_id, employee_id) {
+    console.log(role_id, employee_id);
+    return this.connection.promise().query("UPDATE employees SET role_id = ? WHERE id = ?", [role_id, employee_id])
   }
 }
 
