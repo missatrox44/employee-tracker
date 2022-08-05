@@ -32,7 +32,9 @@ const startProgram = () => {
       } else if (decision.choice === 'View All Roles') {
         viewRoles();
       } else if (decision.choice === 'Add Roles') {
-        addNewRole();
+        // addNewRole();
+        console.log('Function under construction');
+        startProgram();
       } else if (decision.choice === 'View All Departments') {
         viewDepts();
       } else if (decision.choice === 'Add Department') {
@@ -53,6 +55,30 @@ const viewEmployeeInfo = () => {
 }
 
 //ADD EMPLOYEE 
+// const addEmployeeQ = [
+//   {
+//     type: 'input',
+//     name: 'firstName',
+//     message: 'What is employees first name?',
+//   },
+//   {
+//     type: 'input',
+//     name: 'lastName',
+//     message: 'What is the employees last name?',
+//   },
+//   {
+//     type: 'list',
+//     name: 'assignRole',
+//     message: 'What is the employees role?',
+//     choices: EMPLOYEES_ARRAY
+//   },
+//   {
+//     type: 'list',
+//     name: 'whoManager',
+//     message: 'Who is the employees manager?',
+//     choices: MANAGER_ARRAY
+//   }
+// ]
 
 
 //UPDATE EMPLOYEE ROLE
@@ -85,6 +111,7 @@ const updateEmp = () => {
                   value: role.id
                 }
               })
+
               inquirer.prompt([
                 {
                   type: 'list',
@@ -95,9 +122,10 @@ const updateEmp = () => {
               ])
                 .then((answer) => {
                   // console.log(answer)
-                  console.log(`Assigned the role ${answer.chosenRole} to ${empToUpdate}`)
+                  // console.log(`Assigned the role ${answer.chosenRole} to ${empToUpdate}`)
                   EmployeeDB.updateEmployeeRole(answer.chosenRole, empToUpdate);
                   startProgram();
+
                 })
             })
         })
@@ -116,37 +144,41 @@ const viewRoles = () => {
     })
 }
 
-//ADD ROLES question
-//make question a function
-//return addRolesQ
-const addRolesQ = [
-  {
-    type: 'input',
-    name: 'newRole',
-    message: 'What is the name of the role?',
-  },
-  {
-    type: 'input',
-    name: 'salary',
-    message: 'What is the salary of the role?',
-  },
-  {
-    type: 'input',
-    name: 'whichDept',
-    message: 'Which department does this role belong to?',
-  }
-]
 
-//ADD ROLES
+//ADD ROLE
 const addNewRole = () => {
-  inquirer.prompt(addRolesQ)
-    .then((answer) => {
-      EmployeeDB.insertRole(answer.newRole)
-      console.log(`Added ${answer.newRole} to Employee Database.`)
-    })
-    .then(() => {
+  EmployeeDB.callEmployees()
+    .then(([rows]) => {
+      const departmentChoices = rows.map(department => {
+        return {
+          name: department.dept,
+          value: department.id
+        }
+      })
+      console.log(departmentChoices);
+      inquirer.prompt([
+        {
+          type: 'input',
+          name: 'newRole',
+          message: 'What is the name of the role?',
+        },
+        {
+          type: 'input',
+          name: 'salary',
+          message: 'What is the salary of the role?',
+        },
+        {
+          type: 'input',
+          name: 'whichDept',
+          message: 'Which department does this role belong to?',
+          choices: departmentChoices
+        }
+      ])
+
       startProgram();
+
     })
+
 }
 
 //VIEW ALL DEPARTMENTS
