@@ -28,7 +28,7 @@ The user will initialize the program by typing 'node index.js'. The user will th
 <br><br>
 The user will choose an option and then be prompted with questions pertaining to that department, employee or role. The user will be directed to the main menu of options and may end the program by choosing 'Quit'
 <br><br>
-Note: Add Employee and Add Role functions are currently under construction.
+Note: Add Employee function is currently under construction.
 
 ## License
 MIT

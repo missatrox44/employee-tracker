@@ -27,7 +27,7 @@ class EmployeeDB {
 
   //add new roles to role table w/ inquirer
   insertRole(input) {
-    return this.connection.promise().query("INSERT INTO roles (title) VALUES (?)", input)
+    return this.connection.promise().query("INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)", input)
   }
 
   //produce employee names only

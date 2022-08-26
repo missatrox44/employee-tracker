@@ -32,9 +32,7 @@ const startProgram = () => {
       } else if (decision.choice === 'View All Roles') {
         viewRoles();
       } else if (decision.choice === 'Add Roles') {
-        // addNewRole();
-        console.log('Function under construction');
-        startProgram();
+        addNewRole();
       } else if (decision.choice === 'View All Departments') {
         viewDepts();
       } else if (decision.choice === 'Add Department') {
@@ -54,7 +52,7 @@ const viewEmployeeInfo = () => {
     })
 }
 
-//ADD EMPLOYEE 
+// ADD EMPLOYEE 
 // const addEmployeeQ = [
 //   {
 //     type: 'input',
@@ -147,7 +145,7 @@ const viewRoles = () => {
 
 //ADD ROLE
 const addNewRole = () => {
-  EmployeeDB.callEmployees()
+  EmployeeDB.viewAllDepartments()
     .then(([rows]) => {
       const departmentChoices = rows.map(department => {
         return {
@@ -155,7 +153,7 @@ const addNewRole = () => {
           value: department.id
         }
       })
-      console.log(departmentChoices);
+      // console.log(departmentChoices);
       inquirer.prompt([
         {
           type: 'input',
@@ -168,14 +166,21 @@ const addNewRole = () => {
           message: 'What is the salary of the role?',
         },
         {
-          type: 'input',
+          type: 'list',
           name: 'whichDept',
           message: 'Which department does this role belong to?',
           choices: departmentChoices
         }
       ])
-
-      startProgram();
+      .then((answer) => {
+        // console.log(response)
+        EmployeeDB.insertRole([answer.newRole, answer.salary, answer.whichDept])
+        console.log(`Added ${answer.newRole} to Employee Database.`)
+        
+      }
+      ).then(() => {
+        startProgram();
+      })
 
     })
 
