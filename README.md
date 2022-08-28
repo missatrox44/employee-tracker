@@ -27,8 +27,7 @@ This back-end JavaScript program can be utilized by business owners to view depa
 The user will initialize the program by typing 'node index.js'. The user will then be prompted with a menu of options including: View All Employees, Add Employee, Update Employee Role, View All Roles, Add Roles, View All Departments, Add Department and Quit.
 <br><br>
 The user will choose an option and then be prompted with questions pertaining to that department, employee or role. The user will be directed to the main menu of options and may end the program by choosing 'Quit'
-<br><br>
-Note: Add Employee function is currently under construction.
+
 
 ## License
 MIT

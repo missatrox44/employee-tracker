@@ -5,9 +5,6 @@ const EmployeeDB = require('./db/index');
 const cTable = require('console.table');
 const { updateEmployeeRole } = require('./db/index');
 
-
-
-
 //main menu prompts
 const mainMenu = [
   {
@@ -18,6 +15,7 @@ const mainMenu = [
   }
 ]
 
+//function to get back to mainMenu
 const startProgram = () => {
   inquirer.prompt(mainMenu)
     .then(decision => {
@@ -42,7 +40,7 @@ const startProgram = () => {
     })
 }
 
-
+//query employees
 const viewEmployeeInfo = () => {
   EmployeeDB.viewAllEmployees()
     .then(([rows]) => {
@@ -95,14 +93,8 @@ const addEmployee = () => {
     ).then(() => {
       startProgram();
     })
-
   })
-
 }
-
-
-
-
 
 //UPDATE EMPLOYEE ROLE
 const updateEmp = () => {
@@ -155,9 +147,6 @@ const updateEmp = () => {
     })
 }
 
-
-
-
 //VIEW ALL ROLES
 const viewRoles = () => {
   EmployeeDB.viewAllRoles()
@@ -166,7 +155,6 @@ const viewRoles = () => {
       startProgram();
     })
 }
-
 
 //ADD ROLE
 const addNewRole = () => {
@@ -206,9 +194,7 @@ const addNewRole = () => {
         ).then(() => {
           startProgram();
         })
-
     })
-
 }
 
 //VIEW ALL DEPARTMENTS
@@ -219,7 +205,6 @@ const viewDepts = () => {
       startProgram();
     })
 }
-
 
 //ADD DEPARTMENT question
 const addDeptQ = [
@@ -241,8 +226,6 @@ const addDept = () => {
       startProgram();
     })
 }
-
-
 
 
 startProgram();

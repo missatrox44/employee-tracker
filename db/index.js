@@ -46,6 +46,7 @@ class EmployeeDB {
     return this.connection.promise().query("UPDATE employees SET role_id = ? WHERE id = ?", [role_id, employee_id])
   }
 
+  //query to add employee to database
   insertEmployee(input) {
     return this.connection.promise().query("INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", input)
   }
