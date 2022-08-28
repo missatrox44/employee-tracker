@@ -25,8 +25,7 @@ const startProgram = () => {
         viewEmployeeInfo();
       } else if (decision.choice === 'Add Employee') {
         console.log('Function under construction');
-        startProgram();
-        //addEmployee function
+        addEmployee();
       } else if (decision.choice === 'Update Employee Role') {
         updateEmp();
       } else if (decision.choice === 'View All Roles') {
@@ -53,30 +52,56 @@ const viewEmployeeInfo = () => {
 }
 
 // ADD EMPLOYEE 
-// const addEmployeeQ = [
-//   {
-//     type: 'input',
-//     name: 'firstName',
-//     message: 'What is employees first name?',
-//   },
-//   {
-//     type: 'input',
-//     name: 'lastName',
-//     message: 'What is the employees last name?',
-//   },
-//   {
-//     type: 'list',
-//     name: 'assignRole',
-//     message: 'What is the employees role?',
-//     choices: EMPLOYEES_ARRAY
-//   },
-//   {
-//     type: 'list',
-//     name: 'whoManager',
-//     message: 'Who is the employees manager?',
-//     choices: MANAGER_ARRAY
-//   }
-// ]
+const addEmployee = () => {
+  EmployeeDB.callRoles()
+    .then(([rows]) => {
+      const roleChoices = rows.map(role => {
+        return {
+         name: role.role,
+          value: role.id
+         }
+      })
+  // console.log(roleChoices);
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'firstName',
+      message: 'What is employees first name?',
+    },
+    {
+      type: 'input',
+      name: 'lastName',
+      message: 'What is the employees last name?',
+    },
+    {
+      type: 'list',
+      name: 'assignRole',
+      message: 'What is the employees role?',
+      choices: roleChoices
+    },
+    {
+      type: 'list',
+      name: 'whoManager',
+      message: 'Who is the employees manager?',
+      choices: ['1', '2', '3', '4']
+    }
+  ])
+    .then((answer) => {
+      // console.log(answer)
+      EmployeeDB.insertEmployee([answer.firstName, answer.lastName, answer.assignRole, answer.whoManager])
+      console.log(`Added ${answer.firstName} ${answer.lastName} to Employee Database.`)
+
+    }
+    ).then(() => {
+      startProgram();
+    })
+
+  })
+
+}
+
+
+
 
 
 //UPDATE EMPLOYEE ROLE
@@ -172,15 +197,15 @@ const addNewRole = () => {
           choices: departmentChoices
         }
       ])
-      .then((answer) => {
-        // console.log(response)
-        EmployeeDB.insertRole([answer.newRole, answer.salary, answer.whichDept])
-        console.log(`Added ${answer.newRole} to Employee Database.`)
-        
-      }
-      ).then(() => {
-        startProgram();
-      })
+        .then((answer) => {
+          // console.log(response)
+          EmployeeDB.insertRole([answer.newRole, answer.salary, answer.whichDept])
+          console.log(`Added ${answer.newRole} to Employee Database.`)
+
+        }
+        ).then(() => {
+          startProgram();
+        })
 
     })
 
